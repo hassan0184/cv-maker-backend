@@ -110,7 +110,7 @@ class UserForgetPassword(APIView):
         
         uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
         token = PasswordResetTokenGenerator().make_token(user)
-        current_site ="http://192.168.140.207:1234"
+        current_site = os.environ['CV_MAKER_CURRENT_SITE']
         absurl = f'{current_site}/{uidb64}/{token}/'
         send_forget_password_email(user.first_name,email,absurl)
         return Response({'success': 'Password Reset Email Sent', 'message': 'We have sent you an email with a link to reset your password. Please check your inbox and follow the instructions to reset your password.'}, status=status.HTTP_200_OK)
