@@ -96,7 +96,16 @@ class SetNewPasswordSerializer(serializers.Serializer):
                 return Response(data={'success': False, 'message': 'This email does not exist in our system'}, status=status.HTTP_404_NOT_FOUND)
         
         if not PasswordResetTokenGenerator().check_token(user, token):
-            raise AuthenticationFailed('The reset link is invalid', 401)
+            raise serializers.ValidationError({'Error':"The reset link is invalid"})
+        
+        special_characters = r'[!@#$%^&*()\-_=+{}\[\]|;:"<>,.?/]'
+        special_characters_count = len(re.findall(special_characters, password))
+        
+        if len(password) < 8:
+            raise serializers.ValidationError({'Error':"Password must be at least 8 characters long."})
+        
+        elif special_characters_count < 1:
+            raise serializers.ValidationError({'Error':"Password must contain at least 1 special character."})
         
         user.set_password(password)
         user.save()

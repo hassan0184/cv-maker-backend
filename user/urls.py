@@ -15,9 +15,8 @@ path('get/',UserView.as_view() ,name="retrieve-user"),
 path('update/',UserView.as_view() ,name="user-update"),
 path('all/',UserRegister.as_view() ,name="users-list"),
 path('forgetpassword/',UserForgetPassword.as_view(),name="forget-password"),
-path('password-reset-complete/<str:uidb64>/<str:token>/', SetNewPasswordAPIView.as_view(),
+path('setpassword/<str:uidb64>/<str:token>/', SetNewPasswordAPIView.as_view(),
          name='password-reset-complete'),
-# path('password-reset-check-token/<str:uidb64>/<str:token>/',PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),
 
 
 ]
