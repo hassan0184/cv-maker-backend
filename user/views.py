@@ -77,7 +77,7 @@ class UserView(RetrieveUpdateDestroyAPIView):
             return UserSerializer
     
     def get(self, request, *args, **kwargs):
-        user_obj = User.objects.get(id=self.request.user.id)
+        user_obj = get_object_or_404(User,id=self.request.user.id)
         serializer = self.get_serializer(user_obj) 
         return Response({'data': serializer.data}, status=status.HTTP_200_OK)
     
